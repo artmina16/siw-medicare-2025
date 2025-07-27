@@ -91,7 +91,7 @@ public class AuthenticationController {
             credentials.setUser(user);
             credentialsService.saveCredentials(credentials);
             model.addAttribute("user", user);
-            return "/login";
+            return "formLogin.html";
         }
         return "formRegisterUser.html";
     }

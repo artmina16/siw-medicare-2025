@@ -67,3 +67,5 @@ INSERT INTO visit_type (id, name, specialization_id) VALUES (nextval('hibernate_
 INSERT INTO users(id,name,surname)VALUES(1,'Martina','Castelli');
 INSERT INTO credentials(id,user_id,password,role , username) VALUES(1,1,'$2a$10$9K1zWSyVEOHQTJ3P.q94z.m1twXVFkjMvtMB1FidJFy8VJTlfgnKm','ADMIN','admin@gmail.com');
 
+SELECT setval('users_seq', (SELECT MAX(id) FROM users));
+SELECT setval('credentials_seq', (SELECT MAX(id) FROM credentials));
