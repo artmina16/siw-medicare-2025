@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import it.uniroma3.siw.security.CustomAccessDeniedHandler;
+
 import static it.uniroma3.siw.model.Credentials.DOCTOR_ROLE;
 import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -50,7 +52,8 @@ import javax.sql.DataSource;
     }
 
     @Bean
-    protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception{
+    protected SecurityFilterChain configure(final HttpSecurity httpSecurity, CustomAccessDeniedHandler customAccessDeniedHandler) throws Exception{
+
         httpSecurity
                 .csrf(withDefaults()).cors(cors -> cors.disable())
                 .authorizeHttpRequests(requests -> requests
@@ -64,20 +67,21 @@ import javax.sql.DataSource;
                         .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                         .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                         // tutti gli utenti autenticati possono accere alle pagine rimanenti 
-                        .anyRequest().authenticated()).formLogin(login -> login
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/success", true)
-                .failureUrl("/login?error=true"))
-                .logout(logout -> logout
-                        // il logout è attivato con una richiesta GET a "/logout"
+                        .anyRequest().authenticated())
+                		// LOGIN:
+                		.formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/success", true)
+                        .failureUrl("/login?error=true")).logout(logout -> logout
                         .logoutUrl("/logout")
-                        // in caso di successo, si viene reindirizzati alla home
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .clearAuthentication(true).permitAll());
+                        .clearAuthentication(true).permitAll())
+                		.exceptionHandling(handling -> handling
+                        .accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
     }
 }
