@@ -60,6 +60,7 @@ public class AppointmentController {
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		User user = credentials.getUser();
 		model.addAttribute("appointments", appointmentService.findByUser(user));
+		model.addAttribute("count", appointmentService.countByUser(user));
 		return "patient/appointments.html";
 	}
   	

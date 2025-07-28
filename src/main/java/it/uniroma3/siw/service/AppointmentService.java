@@ -37,5 +37,7 @@ public class AppointmentService {
 	public Collection<Appointment> findByUser(User user) {
 		return appointmentRepository.findByUser(user);
 	}
+	
+	public Long countByUser(User user) {return appointmentRepository.countByUser(user);}
     
 }

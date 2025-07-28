@@ -33,9 +33,16 @@
         <div class="container text-center">
             <h2 th:text="'Tipi di visita per ' + ${specialization.name}">Specializzazione</h2>
             <p>Seleziona un tipo di visita per procedere con la prenotazione.</p>
+			<!-- Pulsante “Dottori di questa specializzazione” – versione coerente -->
+				<div class="text-center mt-2">
+				    <a th:href="@{/patient/specialization/{id}/doctors(id=${specialization.id})}"
+				       class="btn btn-secondary btn-custom">
+				        <i class="fa-solid fa-user-doctor"></i>&nbsp;
+				        Dottori di questa specializzazione
+				    </a>
+				</div>
         </div>
     </section>
-
     <!-- Visit List -->
     <section class="visit-section section-compact">
         <div class="container">

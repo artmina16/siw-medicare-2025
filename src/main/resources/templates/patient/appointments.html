@@ -12,6 +12,7 @@
 
     <h1>I miei Appuntamenti</h1>
     
+	<p>Appuntamenti totali: <span th:text="${count}"></span></p>
 
     <p th:if="${#lists.isEmpty(appointments)}">Nessun appuntamento prenotato.</p>
 

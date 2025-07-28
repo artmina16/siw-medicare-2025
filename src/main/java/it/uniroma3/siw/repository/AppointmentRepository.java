@@ -11,4 +11,5 @@ import it.uniroma3.siw.model.User;
 public interface AppointmentRepository extends CrudRepository<Appointment, Long> {
 
 	Collection<Appointment> findByUser(User user);
+	long countByUser(User user);
 }

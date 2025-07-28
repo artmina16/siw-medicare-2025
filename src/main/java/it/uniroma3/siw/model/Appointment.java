@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 public class Appointment {
@@ -32,10 +33,10 @@ public class Appointment {
     @ManyToOne
     private User user;
     
-    @OneToOne
+    @ManyToOne
     private VisitType visitType;
     
-    @OneToOne
+    @ManyToOne
     private HealthFacility healthFacility;
 
 	public Long getId() {

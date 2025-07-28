@@ -49,6 +49,16 @@ public class SpecializationController {
     	return "patient/specializations.html";
     }
     
+    @GetMapping("/patient/specialization/{id}/doctors")
+    public String doctorsBySpecialization(@PathVariable Long id, Model model) {
+        Specialization spec = specializationService.findById(id);
+        List<Doctor> doctors = doctorService.findBySpecialization(spec);   // query‑method
+        model.addAttribute("specialization", spec);
+        model.addAttribute("doctors", doctors);
+        return "patient/doctorsBySpecialization.html";       
+    }
+
+    
     @GetMapping("/patient/specialization/{id}/visitTypes")
     public String listVisitsBySpecialization(@PathVariable("id") Long id, Model model) {
         Specialization specialization = specializationService.findById(id);
